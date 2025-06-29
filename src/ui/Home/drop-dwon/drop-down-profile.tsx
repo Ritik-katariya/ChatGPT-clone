@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { SignOutButton } from "@clerk/nextjs"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -65,8 +66,7 @@ export function DropdownProfile() {
           
         </DropdownMenuGroup>
         <DropdownMenuItem>
-          Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          <SignOutButton/>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
