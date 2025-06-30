@@ -17,14 +17,19 @@ import {
 import { Avatar,AvatarImage,AvatarFallback } from '@radix-ui/react-avatar'
 import Image from "next/image"
 
-export function DropdownProfile() {
+interface DropdownProfileProps {
+  data: any; // Replace 'any' with a more specific type if available
+}
+
+export function DropdownProfile({ data }: DropdownProfileProps) {
+  const {name,email,image}=data;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="rounded-full w-8 h-8 p-0">
           <Avatar className="w-8 h-8 rounded-full overflow-hidden">
             <AvatarImage
-              src="https://tse2.mm.bing.net/th/id/OIP.tjFlJ96qI6uzt1gXH0Im0wHaHa?pid=Api&P=0&h=180"
+              src={image || "https://tse2.mm.bing.net/th/id/OIP.tjFlJ96qI6uzt1gXH0Im0wHaHa?pid=Api&P=0&h=180"}
               alt="@shadcn"
               className="w-full h-full object-cover rounded-full"
             />
@@ -33,7 +38,7 @@ export function DropdownProfile() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-[#3b3b3b] border-[#474747] text-white " align="start" >
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>{email}</DropdownMenuLabel>
         <DropdownMenuGroup>
           <DropdownMenuItem>
             Upgrade Plan

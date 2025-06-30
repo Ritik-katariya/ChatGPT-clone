@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { Dropdown } from "./drop-dwon/drop-down-chatgpt";
 
@@ -5,7 +6,13 @@ import { DropdownProfile } from "./drop-dwon/drop-down-profile";
 import { Button } from "@/components/ui/button";
 import { Sparkle } from "lucide-react";
 import { TempChat } from "@/image/svg-icon";
+import { useUser } from "@/hooks/useUser";
 export default function Header() {
+
+
+  const {data,isLoading,isError}=useUser();
+  console.log(data[0],"data");
+
   return (
     <div className="flex justify-between items-center w-full h-12 mt-1  -ml-6">
       <Dropdown />
@@ -17,7 +24,7 @@ export default function Header() {
         <span className="w-10 h-10 flex justify-center items-center hover:bg-[#525252b6] rounded-full">
           <TempChat />
         </span>
-        <DropdownProfile />
+        <DropdownProfile  data={data[0]}/>
       </span>
     </div>
   );

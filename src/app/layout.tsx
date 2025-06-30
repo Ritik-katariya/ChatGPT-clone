@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "../style/globals.css";
 import { geistSans, geistMono, inter } from "@/style/fonts";
 import { ClerkProvider, SignedIn, SignedOut, SignIn } from "@clerk/nextjs";
-
+import { ReactQueryProvider } from "@/lib/ReactQueryProvider";
 
 export const metadata: Metadata = {
   title: "ChatGPT Clone",
@@ -19,14 +19,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased`}
       >
+
         <ClerkProvider>
           <SignedOut>
-           <div className="w-screen h-screen flex justify-center items-center bg-[#292929]">
-           <SignIn />
-           </div>
+            <div className="w-screen h-screen flex justify-center items-center bg-[#292929]">
+              <SignIn />
+            </div>
           </SignedOut>
-          <SignedIn>{children}</SignedIn>
+          <SignedIn>
+<ReactQueryProvider>
+
+            {children}
+</ReactQueryProvider>
+
+          </SignedIn>
         </ClerkProvider>
+
       </body>
     </html>
   );
