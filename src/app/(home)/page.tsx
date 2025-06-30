@@ -1,11 +1,11 @@
-
 import ChatSection from "@/ui/Home/chat-section";
 import Header from "@/ui/Home/header";
 import SideTab from "@/ui/Home/side-tab";
 import { auth,currentUser, User } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { connectDB } from "@/lib/mongodb";
-import { useUser } from "@/hooks/useUser";
+import Chat from "@/ui/chatUi";
+// import { useUser } from "@/hooks/useUser";
 
 
 
@@ -30,6 +30,8 @@ if (user) {
 }
 }
 
+// const {data,isLoading,isError}=useUser();
+// console.log(data,"data");
 return (
     <div className="flex bg-[#212121] w-screen h-screen justify-between">
      
@@ -39,6 +41,7 @@ return (
   <ChatSection/>
 </div>
     
+{/* <Chat/> */}
     </div>
   );
 }

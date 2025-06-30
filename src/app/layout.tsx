@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "../style/globals.css";
 import { geistSans, geistMono, inter } from "@/style/fonts";
 import { ClerkProvider, SignedIn, SignedOut, SignIn } from "@clerk/nextjs";
-import { ReactQueryProvider } from "@/lib/ReactQueryProvider";
+// import { ReactQueryProvider } from "@/lib/react-query-provider";
 
 export const metadata: Metadata = {
   title: "ChatGPT Clone",
@@ -27,10 +27,10 @@ export default function RootLayout({
             </div>
           </SignedOut>
           <SignedIn>
-<ReactQueryProvider>
+{/* <ReactQueryProvider> */}
 
             {children}
-</ReactQueryProvider>
+{/* </ReactQueryProvider> */}
 
           </SignedIn>
         </ClerkProvider>

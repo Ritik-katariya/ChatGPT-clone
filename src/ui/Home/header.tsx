@@ -10,8 +10,9 @@ import { useUser } from "@/hooks/useUser";
 export default function Header() {
 
 
-  const {data,isLoading,isError}=useUser();
-  console.log(data[0],"data");
+  // const {data,isLoading,isError}=useUser();
+  // console.log(data[0],"data");
+  const data={email:"",name:"",image:""}
 
   return (
     <div className="flex justify-between items-center w-full h-12 mt-1  -ml-6">
@@ -24,7 +25,7 @@ export default function Header() {
         <span className="w-10 h-10 flex justify-center items-center hover:bg-[#525252b6] rounded-full">
           <TempChat />
         </span>
-        <DropdownProfile  data={data[0]}/>
+        <DropdownProfile  data={data}/>
       </span>
     </div>
   );
