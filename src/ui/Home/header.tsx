@@ -14,8 +14,9 @@ export default function Header() {
   // console.log(data[0],"data");
   const data={email:"",name:"",image:""}
 
+
   return (
-    <div className="flex justify-between items-center w-full h-12 mt-1  -ml-6">
+    <div className="flex justify-between items-center w-full h-14 pb-2  -ml-2 ">
       <Dropdown />
       <Button className="w-[100px] h-[30px] bg-[#3f3e74d7] hover:bg-[#3f3e6d] rounded-xl font-medium text-sm ">
         <Sparkle size={15} color="#ffffff" strokeWidth={3} />

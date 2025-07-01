@@ -23,13 +23,15 @@ useEffect(() => {
 return (
     <>
       {Array.isArray(messages) && (messages as any[]).length > 0 ? (
-        <div>
-          <div>
+        <div className="w-full h-full flex flex-col">
+          {/* Chat area: scrollable, fills available space above input */}
+          <div className="flex-1 overflow-y-auto">
             <Chat messages={messages as any[]} />
           </div>
-        <div>
-          <ChatInput setMessages={setMessages}/>
-        </div>
+          {/* Chat input: fixed at the bottom */}
+          <div className="sticky bottom-0 left-0 right-0 bg-[#212121] z-10">
+            <ChatInput setMessages={setMessages} />
+          </div>
         </div>
       ):(
         <div className='w-full h-full flex justify-center items-center text-white  '>

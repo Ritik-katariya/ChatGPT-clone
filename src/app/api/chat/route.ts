@@ -1,21 +1,56 @@
-import { streamText } from 'ai';
+import { streamText, generateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
+import { NextRequest } from 'next/server';
 
-export const maxDuration = 30;
+export const maxDuration = 60;
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    // 🛡️ Safely filter out malformed or incomplete messages
     const messages = (body.messages ?? []).flatMap((msg: any) => {
       if (!msg?.role || !msg?.content) return [];
+
       const content = Array.isArray(msg.content) ? msg.content : [msg.content];
 
-      // 🧹 Clean out empty text or invalid part
-      const validContent = content.filter(
-        (part: any) => part && part.type && (part.text || part.data)
-      );
+      const validContent = content
+        .map((part: any) => {
+          if (!part || !part.type) return null;
+
+          if (part.type === 'text') {
+            return {
+              type: 'text',
+              text: part.text,
+            };
+          }
+
+          if (part.type === 'image') {
+            return {
+              type: 'image',
+              image: part.image,
+              providerOptions: part.providerOptions || {
+                openai: { imageDetail: 'low' },
+              },
+            };
+          }
+
+          if (part.type === 'file') {
+            const binary =
+              part.data instanceof Array
+                ? new Uint8Array(part.data).buffer
+                : part.data;
+
+            return {
+              type: 'file',
+              data: binary,
+              mimeType: part.mimeType,
+              filename: part.filename || 'file',
+            };
+          }
+
+          return null;
+        })
+        .filter(Boolean);
 
       return validContent.length > 0
         ? [{ role: msg.role, content: validContent }]
@@ -26,10 +61,25 @@ export async function POST(req: Request) {
       return new Response('No valid messages provided', { status: 400 });
     }
 
+    const hasFile = messages.some((msg: { content?: any[] }) =>
+      msg.content?.some((c: { type?: string }) => c.type === 'file')
+    );
+
+    if (hasFile) {
+      const result = await generateText({
+        model: openai('gpt-4o'),
+        messages,
+      });
+      return new Response(JSON.stringify({ text: result.text }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     const result = await streamText({
-      model: openai('gpt-4o'), // or 'gpt-4-turbo'
+      model: openai('gpt-4o'),
       system:
-        'You are a helpful, intelligent, and friendly AI assistant. Format code correctly.',
+        'You are a helpful, intelligent, and friendly AI assistant. Format code correctly. Explain images and PDFs clearly.',
       messages,
     });
 
