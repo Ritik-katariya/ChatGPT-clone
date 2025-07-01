@@ -22,7 +22,7 @@ interface DropdownProfileProps {
 }
 
 export function DropdownProfile({ data }: DropdownProfileProps) {
-  const {name,email,image}=data;
+  const { name, email, image } = data || {};
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

@@ -79,9 +79,16 @@ export async function POST(req: NextRequest) {
     const result = await streamText({
       model: openai('gpt-4o'),
       system:
-        'You are a helpful, intelligent, and friendly AI assistant. Format code correctly. Explain images and PDFs clearly.',
+      'You are a helpful, intelligent, and friendly AI assistant. Format code correctly. Explain images and PDFs clearly.',
       messages,
     });
+
+    // To get messages from the result, you need to iterate over the stream.
+    // Example: 
+    // for await (const chunk of result) {
+    //   // process chunk
+    // }
+    // Remove the incorrect usage of result.value.messages.
 
     return result.toDataStreamResponse();
   } catch (err) {

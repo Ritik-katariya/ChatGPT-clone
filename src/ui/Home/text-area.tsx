@@ -161,6 +161,7 @@ export default function ChatInput({ append, messages, isLoading }: any) {
                       type="button"
                       onClick={() => removeFile(file.id)}
                       className="absolute -top-1 -right-1 w-5 h-5 bg-[#ff4444] hover:bg-[#ff6666] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      title="Remove file"
                     >
                       <X className="w-3 h-3 text-white" />
                     </button>
@@ -234,6 +235,7 @@ export default function ChatInput({ append, messages, isLoading }: any) {
         accept="image/*,application/pdf,.doc,.docx"
         onChange={handleFileUpload}
         className="hidden"
+        title="Upload files"
       />
       {isLoading && (
         <div className="flex items-center mt-2 text-[#b4b4b4] text-sm animate-pulse">

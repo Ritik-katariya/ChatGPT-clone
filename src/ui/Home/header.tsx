@@ -6,13 +6,12 @@ import { DropdownProfile } from "./drop-dwon/drop-down-profile";
 import { Button } from "@/components/ui/button";
 import { Sparkle } from "lucide-react";
 import { TempChat } from "@/image/svg-icon";
-import { useUser } from "@/hooks/useUser";
+import { useCurrentUser } from "@/hooks/useUser";
+
 export default function Header() {
 
-
-  // const {data,isLoading,isError}=useUser();
-  // console.log(data[0],"data");
-  const data={email:"",name:"",image:""}
+const { data } = useCurrentUser();
+console.log("User Data:", data);
 
 
   return (

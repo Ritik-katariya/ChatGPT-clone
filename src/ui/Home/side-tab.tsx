@@ -37,7 +37,10 @@ export default function SideTab() {
             className="h-10 w-10 flex justify-center items-center rounded-md hover: hover:bg-[#3a3a3a]"
            >
            {collapsed && isOpen ? (
-              <button onClick={() => setCollapsed(!collapsed)}>
+              <button 
+                onClick={() => setCollapsed(!collapsed)}
+                title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+              >
                 <TabIcon />
               </button>
             ) : (
@@ -48,7 +51,11 @@ export default function SideTab() {
            </span>
 
             {!collapsed && (
-              <button onClick={() => setCollapsed(!collapsed)} className="h-10 w-10 hover:bg-[#3a3a3a] rounded-md flex justify-center items-center">
+              <button
+                onClick={() => setCollapsed(!collapsed)}
+                className="h-10 w-10 hover:bg-[#3a3a3a] rounded-md flex justify-center items-center"
+                title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+              >
                 <TabIcon />
               </button>
             )}
