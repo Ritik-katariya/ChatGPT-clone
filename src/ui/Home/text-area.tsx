@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Mic,
@@ -11,7 +11,6 @@ import {
   ArrowUp,
   Plus,
 } from "lucide-react";
-import { useChat } from "@ai-sdk/react";
 
 interface PastedFile {
   id: string;
@@ -37,10 +36,7 @@ function base64ToArrayBuffer(base64: string): number[] {
   return Array.from(bytes);
 }
 
-export default function ChatInput({ setMessages }: any) {
-  const { append, messages, isLoading } = useChat();
-  const lastSyncedCount = useRef(0);
-
+export default function ChatInput({ append, messages, isLoading }: any) {
   const [message, setMessage] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState<PastedFile[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -51,16 +47,6 @@ export default function ChatInput({ setMessages }: any) {
   const triggerFileUpload = () => {
     fileInputRef.current?.click();
   };
-
-  useEffect(() => {
-    const isNew = messages.length !== lastSyncedCount.current;
-
-    if (messages.length > 0 && isNew && !isLoading) {
-      lastSyncedCount.current = messages.length;
-      const timer = setTimeout(() => setMessages(messages), 100);
-      return () => clearTimeout(timer);
-    }
-  }, [messages.length, isLoading]);
 
   const adjustTextareaHeight = () => {
     const textarea = textareaRef.current;
@@ -249,6 +235,12 @@ export default function ChatInput({ setMessages }: any) {
         onChange={handleFileUpload}
         className="hidden"
       />
+      {isLoading && (
+        <div className="flex items-center mt-2 text-[#b4b4b4] text-sm animate-pulse">
+          <span>Assistant is typing</span>
+          <span className="ml-1">...</span>
+        </div>
+      )}
     </div>
   );
 }
