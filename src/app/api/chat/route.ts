@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
 
     if (hasFile) {
       const result = await generateText({
-        model: openai('gpt-4o'),
+        model: openai('gpt-5'),
         messages,
       });
       return new Response(JSON.stringify({ text: result.text }), {
